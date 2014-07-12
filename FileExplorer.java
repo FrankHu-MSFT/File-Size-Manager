@@ -1,3 +1,5 @@
+package asdfsdfsdc;
+
 /*
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -45,11 +47,12 @@
 import javax.swing.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Polygon;
 import java.awt.Graphics;
 import java.awt.event.*;
 
@@ -196,8 +199,8 @@ public class FileExplorer {
 		timer.start();
 		pane.addKeyListener(new KeyListener() {
 
-		@Override
-		public void keyPressed(KeyEvent e) {
+			@Override
+			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					s.setInteger(s.getInteger() - 20);
 				} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -210,6 +213,13 @@ public class FileExplorer {
 					s.setInteger(0);
 				} else if (e.getKeyCode() == KeyEvent.VK_Z) {
 					up.setInteger(0);
+				} else if (e.getKeyCode() == KeyEvent.VK_X) {
+					if (directories.size() > 1) {
+						directories.remove(directories.size() - 1);
+						pane.updateUI();
+						pane.repaint();
+						pane.resize(new Dimension(1000, 1000));
+					}
 				}
 
 				pane.repaint();
@@ -230,31 +240,27 @@ public class FileExplorer {
 		});
 		pane.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.isMetaDown()) {
-					System.out.println("in here");
-					if (directories.size() > 1) {
-						directories.remove(directories.size() - 1);
-						pane.updateUI();
-						pane.repaint();
-						pane.resize(new Dimension(1000, 1000));
-					}
-				} else {
-					int x = s.getInteger();
-					int y = up.getInteger();
-					int fileNumber = 0;
-					for (int z = 0; z < directories.size(); ++z) {
-						fileNumber = 0;
-						x = 0;
-						for (int i = 0; i < directories.get(z).length; ++i) {
-							int size = (int) directories.get(z)[i].length() / 10;
-							if (size > 200) {
-								size = 200;
-							}
-							if (size < 100) {
-								size = 100;
-							}
-							if (inBounds(e.getX(), e.getY(), x, y, size, size)) {
 
+				int x = s.getInteger();
+				int y = up.getInteger();
+				int fileNumber = 0;
+				for (int z = 0; z < directories.size(); ++z) {
+					fileNumber = 0;
+					x = 0;
+					for (int i = 0; i < directories.get(z).length; ++i) {
+						int size = (int) directories.get(z)[i].length() / 10;
+						if (size > 200) {
+							size = 200;
+						}
+						if (size < 100) {
+							size = 100;
+						}
+						if (inBounds(e.getX(), e.getY(), x, y, size, size)) {
+							if (e.isMetaDown()) {
+								if (z == directories.size() - 1) {
+									directories.get(z)[fileNumber].delete();
+								}
+							} else {
 								System.out.println("In here" + x + " "
 										+ fileNumber);
 								System.out.println(directories.get(z)[fileNumber]
@@ -275,14 +281,16 @@ public class FileExplorer {
 										} catch (IOException e1) {
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
-											System.out.println("Something went wrong");
-										}	}
+											System.out
+													.println("Something went wrong");
+										}
+									}
 							}
-							fileNumber += 1;
-							x += size;
 						}
-						y += 200;
+						fileNumber += 1;
+						x += size;
 					}
+					y += 200;
 				}
 			}
 
