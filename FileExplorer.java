@@ -1,4 +1,3 @@
-package asdfsdfsdc;
 
 /*
  * 
@@ -260,8 +259,14 @@ public class FileExplorer {
 							if (e.isMetaDown()) {
 								if (z == directories.size() - 1) {
 									if (directories.get(z)[fileNumber].isFile()) {
-										directories.get(z)[fileNumber].delete();
-										directories.remove(z);
+										try {
+											directories.get(z)[fileNumber]
+													.delete();
+											directories.remove(z);
+										} catch (Exception e1) {
+											System.out
+													.println("Could not delete File");
+										}
 										File[] oldDirectory;
 										if (z != 0) {
 											oldDirectory = new File(
