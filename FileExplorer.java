@@ -1,3 +1,4 @@
+package asdfsdfsdc;
 
 /*
  * 
@@ -237,6 +238,7 @@ public class FileExplorer {
 			}
 
 		});
+		final newInteger lastDirectoryNumber = new newInteger(0);
 		pane.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 
@@ -257,8 +259,26 @@ public class FileExplorer {
 						if (inBounds(e.getX(), e.getY(), x, y, size, size)) {
 							if (e.isMetaDown()) {
 								if (z == directories.size() - 1) {
-									if(!directories.get(z)[fileNumber].isDirectory())
+									if (directories.get(z)[fileNumber].isFile()) {
 										directories.get(z)[fileNumber].delete();
+										directories.remove(z);
+										File[] oldDirectory;
+										if (z != 0) {
+											oldDirectory = new File(
+													directories.get(z - 1)[lastDirectoryNumber
+															.getInteger()]
+															.getPath())
+													.listFiles();
+										} else {
+											File folder = new File("./");
+											oldDirectory = folder.listFiles();
+										}
+
+										directories.add(oldDirectory);
+									}
+									pane.updateUI();
+									pane.repaint();
+									pane.resize(new Dimension(1000, 1000));
 								}
 							} else {
 								System.out.println("In here" + x + " "
@@ -271,8 +291,15 @@ public class FileExplorer {
 										File[] newDirectory = new File(
 												directories.get(z)[fileNumber]
 														.getPath()).listFiles();
-										directories.add(newDirectory);
-										pane.repaint();
+										if (newDirectory.length == 0) {
+											System.out
+													.println("Empty Folder did not go into");
+										} else {
+											directories.add(newDirectory);
+											pane.repaint();
+											lastDirectoryNumber
+													.setInteger(fileNumber);
+										}
 									} else if (directories.get(z)[fileNumber]
 											.isFile()) {
 										Desktop desktop = Desktop.getDesktop();
