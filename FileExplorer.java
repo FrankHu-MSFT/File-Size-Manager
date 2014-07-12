@@ -269,7 +269,8 @@ public class FileExplorer {
 										pane.repaint();
 									} else if (directories.get(z)[fileNumber]
 											.isFile()) {
-
+										Desktop desktop = Desktop.getDesktop();
+										desktop.openFile(directories.get(z)[fileNumber]);
 									}
 							}
 							fileNumber += 1;
