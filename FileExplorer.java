@@ -196,8 +196,8 @@ public class FileExplorer {
 		timer.start();
 		pane.addKeyListener(new KeyListener() {
 
-			@Override
-			public void keyPressed(KeyEvent e) {
+		@Override
+		public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					s.setInteger(s.getInteger() - 20);
 				} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -206,6 +206,10 @@ public class FileExplorer {
 					up.setInteger(up.getInteger() + 20);
 				} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 					up.setInteger(up.getInteger() - 20);
+				} else if (e.getKeyCode() == KeyEvent.VK_A) {
+					s.setInteger(0);
+				} else if (e.getKeyCode() == KeyEvent.VK_Z) {
+					up.setInteger(0);
 				}
 
 				pane.repaint();
