@@ -9,5 +9,4 @@ Right click to close the last opened directory.
 
 This file explorer cannot open files.
 
-Folders and files are displayed relative to their size, the circles are capped at 400mb and 1mb to make the circles stay within a reasonable size. 
-
+Folders and files are displayed relative to their size, the circles are capped to a max and min size so as to make their sizes reasonable.
