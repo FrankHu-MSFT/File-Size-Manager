@@ -257,7 +257,8 @@ public class FileExplorer {
 						if (inBounds(e.getX(), e.getY(), x, y, size, size)) {
 							if (e.isMetaDown()) {
 								if (z == directories.size() - 1) {
-									directories.get(z)[fileNumber].delete();
+									if(!directories.get(z)[fileNumber].isDirectory())
+										directories.get(z)[fileNumber].delete();
 								}
 							} else {
 								System.out.println("In here" + x + " "
