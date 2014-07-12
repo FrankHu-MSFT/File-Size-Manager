@@ -9,6 +9,6 @@ Press Z to go all the way back up.
 Left click on folders to open them.
 Right click to close the last opened directory.
 
-This file explorer cannot open files.
+This file explorer will only open files that have an associated manager, else it will not work correctly. (Undefined Behavior, use this program WITH CAUTION)
 
 Folders and files are displayed relative to their size, the circles are capped to a max and min size so as to make their sizes reasonable.
