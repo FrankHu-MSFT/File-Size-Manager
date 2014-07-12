@@ -13,3 +13,7 @@ Right click to DELETE A FILE/FOLDER DO THIS WITH CAUTION.
 This file explorer will only open files that have an associated manager, else it will not work correctly. (Undefined Behavior, use this program WITH CAUTION)
 
 Folders and files are displayed relative to their size, the circles are capped to a max and min size so as to make their sizes reasonable.
+
+WE ARE NOT RESPONSIBLE FOR ANY DAMAGES DONE TO YOUR COMPUTER OR LIFE DUE TO THIS PROGRAM.
+
+PLEASE USE WITH CAUTION WHEN DELETING ITEMS, THEY DO NOT GO INTO YOUR TRASH CAN, THEY DISAPPEAR FOREVER
