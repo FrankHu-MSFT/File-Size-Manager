@@ -270,8 +270,13 @@ public class FileExplorer {
 									} else if (directories.get(z)[fileNumber]
 											.isFile()) {
 										Desktop desktop = Desktop.getDesktop();
-										desktop.openFile(directories.get(z)[fileNumber]);
-									}
+										try {
+											desktop.open(directories.get(z)[fileNumber]);
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+											System.out.println("Something went wrong");
+										}	}
 							}
 							fileNumber += 1;
 							x += size;
