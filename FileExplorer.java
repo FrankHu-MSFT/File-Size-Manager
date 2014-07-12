@@ -42,9 +42,6 @@
  * http://docs.oracle.com/javase/javatutorials/tutorial/uiswing/start/compile.html#package
  */
 
-/*
- * HelloWorldSwing.java requires no other files. 
- */
 import javax.swing.*;
 
 import java.io.File;
