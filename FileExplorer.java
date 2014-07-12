@@ -52,6 +52,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.*;
 
@@ -105,7 +106,7 @@ public class FileExplorer {
 
 	private static void createAndShowGUI() {
 		// Create and set up the window.
-		JFrame frame = new JFrame("HelloWorldSwing");
+		final JFrame frame = new JFrame("HelloWorldSwing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Add the ubiquitous "Hello World" label.
@@ -137,7 +138,7 @@ public class FileExplorer {
 					x = s.getInteger();
 					int size = 0;
 					for (int i = 0; i < directories.get(j).length; ++i) {
-						size = (int) directories.get(j)[i].length() / 10;
+						size = (int) directories.get(j)[i].length() - 150;
 						if (size > 200) {
 							size = 200;
 						}
@@ -196,6 +197,7 @@ public class FileExplorer {
 		};
 		Timer timer = new Timer(30, action);
 		timer.start();
+		final newInteger lastDirectoryNumber = new newInteger(0);
 		pane.addKeyListener(new KeyListener() {
 
 			@Override
@@ -219,6 +221,73 @@ public class FileExplorer {
 						pane.repaint();
 						pane.resize(new Dimension(1000, 1000));
 					}
+				} else if (e.getKeyCode() == KeyEvent.VK_D) {
+					String z = "";
+					if (directories.size() - 1 != 0) {
+						z = directories.get(directories.size() - 2)[lastDirectoryNumber
+								.getInteger()].getName();
+						z += "\\";
+					} else {
+
+					}
+					System.out.println(z);
+					String s = getFolderName(frame);
+					File dir = new File("./" + z + s);
+					dir.mkdir();
+
+					File[] oldDirectory;
+					System.out.println(directories.size() - 1);
+					if (directories.size() - 1 != 0) {
+						try {
+							directories.remove(directories.size() - 1);
+						} catch (Exception e1) {
+							System.out.println("Could not delete File");
+						}
+						oldDirectory = new File(directories.get(directories
+								.size() - 1)[lastDirectoryNumber.getInteger()]
+								.getPath()).listFiles();
+					} else {
+						directories.remove(directories.size() - 1);
+						File folder = new File("./");
+						oldDirectory = folder.listFiles();
+					}
+					directories.add(oldDirectory);
+				} else if (e.getKeyCode() == KeyEvent.VK_F) {
+					String z = "";
+					if (directories.size() - 1 != 0) {
+						z = directories.get(directories.size() - 2)[lastDirectoryNumber
+								.getInteger()].getName();
+						z += "\\";
+					} else {
+
+					}
+
+					String s = getFileName(frame);
+					File dir = new File("./" + z + s);
+					try {
+						dir.createNewFile();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						System.out.println("File with that name already");
+					}
+					File[] oldDirectory;
+					System.out.println(directories.size() - 1);
+					if (directories.size() - 1 != 0) {
+						try {
+							directories.remove(directories.size() - 1);
+						} catch (Exception e1) {
+							System.out.println("Could not delete File");
+						}
+						oldDirectory = new File(directories.get(directories
+								.size() - 1)[lastDirectoryNumber.getInteger()]
+								.getPath()).listFiles();
+					} else {
+						directories.remove(directories.size() - 1);
+						File folder = new File("./");
+						oldDirectory = folder.listFiles();
+					}
+					directories.add(oldDirectory);
 				}
 
 				pane.repaint();
@@ -237,7 +306,6 @@ public class FileExplorer {
 			}
 
 		});
-		final newInteger lastDirectoryNumber = new newInteger(0);
 		pane.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 
@@ -248,7 +316,7 @@ public class FileExplorer {
 					fileNumber = 0;
 					x = 0;
 					for (int i = 0; i < directories.get(z).length; ++i) {
-						int size = (int) directories.get(z)[i].length() / 10;
+						int size = (int) directories.get(z)[i].length() - 150;
 						if (size > 200) {
 							size = 200;
 						}
@@ -258,7 +326,7 @@ public class FileExplorer {
 						if (inBounds(e.getX(), e.getY(), x, y, size, size)) {
 							if (e.isMetaDown()) {
 								if (z == directories.size() - 1) {
-									if (directories.get(z)[fileNumber].isFile()) {
+									if (directories.get(z)[fileNumber].isFile() || true) {
 										try {
 											directories.get(z)[fileNumber]
 													.delete();
@@ -297,14 +365,18 @@ public class FileExplorer {
 												directories.get(z)[fileNumber]
 														.getPath()).listFiles();
 										if (newDirectory.length == 0) {
-											System.out
-													.println("Empty Folder did not go into");
-										} else {
-											directories.add(newDirectory);
-											pane.repaint();
-											lastDirectoryNumber
-													.setInteger(fileNumber);
+											JOptionPane
+													.showConfirmDialog(
+															frame,
+															"This Folder is Empty, you are now inside the empty folder",
+															"Empty Folder",
+															JOptionPane.PLAIN_MESSAGE);
 										}
+										directories.add(newDirectory);
+										pane.repaint();
+										lastDirectoryNumber
+												.setInteger(fileNumber);
+
 									} else if (directories.get(z)[fileNumber]
 											.isFile()) {
 										Desktop desktop = Desktop.getDesktop();
@@ -358,6 +430,19 @@ public class FileExplorer {
 		frame.resize(1000, 1000);
 		frame.setResizable(false);
 
+	}
+
+	/**
+	 * Prompt for and return the desired screen name.
+	 */
+	private static String getFolderName(Frame frame) {
+		return JOptionPane.showInputDialog(frame, "Choose a Folder Name:",
+				"Folder name selection", JOptionPane.PLAIN_MESSAGE);
+	}
+
+	private static String getFileName(Frame frame) {
+		return JOptionPane.showInputDialog(frame, "Choose a File Name:",
+				"Folder name selection", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	public static void main(String[] args) {
