@@ -428,7 +428,6 @@ public class FileExplorer {
 
 		frame.pack();
 		frame.resize(1000, 1000);
-		frame.setResizable(false);
 
 	}
 
