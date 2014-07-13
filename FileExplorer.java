@@ -314,7 +314,7 @@ public class FileExplorer {
 				int fileNumber = 0;
 				for (int z = 0; z < directories.size(); ++z) {
 					fileNumber = 0;
-					x = 0;
+					x = s.getInteger();
 					for (int i = 0; i < directories.get(z).length; ++i) {
 						int size = (int) directories.get(z)[i].length() - 150;
 						if (size > 200) {
